@@ -1,7 +1,7 @@
-# REST API Validation with Express - Full Stack JavaScript Techdegree
+# REST API Authentication with Express - Full Stack JavaScript Techdegree
 
 ## Project objective
-Exercise exploring how to validate data in an Express REST API application.
+Exercise exploring Basic Authentication and how to use it to implement user authentication within an Express REST API application.
 
 <!-- ## Techniques and concepts
 - Promises
