@@ -10,8 +10,22 @@ const router = express.Router();
 const users = [];
 
 
+const nameValidator = check('name')
+	.exists({ checkNull: true, checkFalsy: true })
+	.withMessage('Please provide a value for "name"');
+
+
 // Route that creates a new user.
-router.post('/users', (req, res) => {
+router.post('/users', nameValidator, (req, res) => {
+
+  // Attempt to get the validation result from the Request object.
+	const errors = validationResults(req);
+	if(!errors.isEmpty()) {
+		const errorMessages = errors.array().map(error => error.msg;
+
+		return res.status(400).json({ errors: errorMesssages })
+	}
+
   // Get the user from the request body.
   const user = req.body;
 
