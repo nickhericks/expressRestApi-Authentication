@@ -10,30 +10,38 @@ const router = express.Router();
 const users = [];
 
 
-const nameValidator = check('name')
-	.exists({ checkNull: true, checkFalsy: true })
-	.withMessage('Please provide a value for "name"');
-
-
 // Route that creates a new user.
-router.post('/users', nameValidator, (req, res) => {
+router.post('/users', [
+  check('name')
+    .exists()
+    .withMessage('Please provide a value for "name"'),
+  check('username')
+    .exists()
+    .withMessage('Please provide a value for "username"'),
+  check('password')
+    .exists()
+    .withMessage('Please provide a value for "password"'),
+], (req, res) => {
 
   // Attempt to get the validation result from the Request object.
-	const errors = validationResults(req);
-	if(!errors.isEmpty()) {
-		const errorMessages = errors.array().map(error => error.msg;
+  const errors = validationResult(req);
 
-		return res.status(400).json({ errors: errorMesssages })
-	}
+  // If there are validation errors...
+  if (!errors.isEmpty()) {
+    // Use the Array `map()` method to get a list of error messages.
+    const errorMessages = errors.array().map(error => error.msg);
+    // Return the validation errors to the client.
+    return res.status(400).json({ errors: errorMessages });
+  } else {
+    // Get the user from the request body.
+    const user = req.body;
 
-  // Get the user from the request body.
-  const user = req.body;
+    // Add the user to the `users` array.
+    users.push(user);
 
-  // Add the user to the `users` array.
-  users.push(user);
-
-  // Set the status to 201 Created and end the response.
-  res.status(201).end();
+    // Set the status to 201 Created and end the response.
+    res.status(201).end();
+  }
 });
 
 module.exports = router;
