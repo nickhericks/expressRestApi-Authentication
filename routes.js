@@ -40,6 +40,7 @@ const authenticateUser = (req, res, next) => {
       // will have access to the user's information.
       if (authenticated) {
         console.log(`Authentication successful for username: ${user.username}`);
+        // Set found user data to variable to be used later in routes
         req.currentUser = user;
       } else {
         message = `Authentication failure for username: ${user.username}`;
@@ -70,6 +71,7 @@ router.get('/users', authenticateUser, (req, res) => {
   res.json({
     name: user.name,
     username: user.username,
+    password: user.password,
   });
 });
 
