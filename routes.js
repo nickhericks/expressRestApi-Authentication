@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+const { check, validationResult } = require('express-validator/check');
 // Construct a router instance.
 const router = express.Router();
 
