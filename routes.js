@@ -14,6 +14,8 @@ const users = [];
 
 
 const authenticateUser = (req, res, next) => {
+  let message = null;
+
   // Parse the user's credentials from the Authorization header.
   const credentials = auth(req);
 
@@ -37,17 +39,28 @@ const authenticateUser = (req, res, next) => {
       // so any middleware functions that follow this middleware function
       // will have access to the user's information.
       if (authenticated) {
+        console.log(`Authentication successful for username: ${user.username}`);
         req.currentUser = user;
+      } else {
+        message = `Authentication failure for username: ${user.username}`;
       }
+    } else {
+      message = `User not found for username: ${credentials.name}`;
     }
+  } else {
+    message = 'Auth header not found';
   }
 
   // If user authentication failed...
-  // Return a response with a 401 Unauthorized HTTP status code.
-
-  // Or if user authentication succeeded...
-  // Call the next() method.
-  next();
+  if (message) {
+    console.log(message);
+    // Return a response with a 401 Unauthorized HTTP status code.
+    res.status(401).json({ message: 'Access Denied' });
+  } else {
+    // Or if user authentication succeeded...
+    // Call the next() method.
+    next();
+  }
 };
 
 
