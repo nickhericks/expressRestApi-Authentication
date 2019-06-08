@@ -3,6 +3,7 @@
 const express = require('express');
 const { check, validationResult } = require('express-validator/check');
 const bcryptjs = require('bcryptjs');
+const auth = require('basic-auth');
 
 // Construct a router instance.
 const router = express.Router();
@@ -34,12 +35,18 @@ const authenticateUser = (req, res, next) => {
   // Return a response with a 401 Unauthorized HTTP status code.
 
   // Or if user authentication succeeded...
-  // Call the next() method.  next();
+  // Call the next() method.
+  next();
 };
 
 
-router.get("/users", authenticateUser, (req, res) => {
-  // Code to get and return the current user...
+router.get('/users', authenticateUser, (req, res) => {
+  const user = req.currentUser;
+
+  res.json({
+    name: user.name,
+    username: user.username,
+  });
 });
 
 
