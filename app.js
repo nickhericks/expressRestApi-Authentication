@@ -2,9 +2,9 @@
 
 const express = require('express');
 const morgan = require('morgan');
-
 // Create the Express app.
 const app = express();
+const routes = require('./routes');
 
 // Setup request body JSON parsing.
 app.use(express.json());
@@ -12,12 +12,15 @@ app.use(express.json());
 // Setup morgan which gives us HTTP request logging.
 app.use(morgan('dev'));
 
+
 // Setup a friendly greeting for the root route.
 app.get('/', (req, res) => {
   res.json({
     message: 'Welcome to the REST API Authentication with Express project!',
   });
 });
+
+app.use('/api', routes);
 
 // Send 404 if no other route matched.
 app.use((req, res) => {
