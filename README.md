@@ -11,7 +11,7 @@ Exercise exploring Basic Authentication and how to use it to implement user auth
 1. Download project.
 2. Run 'npm install' in the command line.
 3. Run 'npm start' in the command line.
-4. Go to 'localhost:3000' in your browser.
+4. Go to 'localhost:5000' in your browser.
 
 <!-- ## Code example
 ```javascript
